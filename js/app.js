@@ -26,39 +26,45 @@ createList()
 
 // second required
 // activated section on scroll 
-// add , remove
+// add , remove the class
 
-window.onscroll = function(){
-    document.querySelectorAll("section").forEach(function(active){
-        if(   active.getBoundingClientRect().top  >= -400 
-            && active.getBoundingClientRect().top <=150
-        
-         ){
-            active.classList.add("your-active-class")
-        } else{
-            active.classList.remove("your-active-class")
-       }
-    });
-};
+// on window scroll
+window.addEventListener('scroll', (e) => {
 
-// smooth when scrolling and set timeout to go
-navBar.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (e.target.dataset.nav) {
-      document
-        .getElementById(`${e.target.dataset.nav}`)
-        .scrollIntoView({ behavior: "smooth" });
-      setTimeout(() => {
-        location.hash = `${e.target.dataset.nav}`;
-      }, 200);
+  // get all sections on the page
+  const sections = document.querySelectorAll('section');
+
+  // loop through each section
+  sections.forEach( sec => {
+
+    // get px distance from top
+    const topDistance = sec.getBoundingClientRect().top;
+
+    // if the distance to the top is between 0-100px
+    if (topDistance > 0 && topDistance < 100) {
+      sec.classList.add('your-active-class');
+
+    // otherwise, remove the class
+    } else {
+      sec.classList.remove('your-active-class');
     }
   });
+});
+
+
+// smooth when scrolling 
+
+window.scrollBy({ 
+  top: 100,
+  left: 0, 
+  behavior: 'smooth' 
+});
 
 
 
-/**
- * disappear the header after 8 seconds and appear again when scrolling.
- */
+
+ //disappear the header after 8 seconds and appear again when scrolling.
+ 
 let isScrolling;
 document.onscroll = () => {
   header.style.display = "block"
@@ -67,4 +73,7 @@ document.onscroll = () => {
     header.style.display = "none";
   }, 4000);
 
-};
+}
+
+
+
